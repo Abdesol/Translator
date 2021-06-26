@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Translator"
+             x:Class="Translator.MainPage">
+
+    <Grid BackgroundColor="{AppThemeBinding Dark=#212121, Light=#EEEEEE,Default=#EEEEEE}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Picker x:Name="from_picker" SelectedIndexChanged="LanguageSelected" Scale="0" Title="From language" />
+        <Picker x:Name="to_picker" SelectedIndexChanged="LanguageSelected" Scale="0" Title="To language"/>
+
+
+        <Frame Grid.Row="0" BackgroundColor="{AppThemeBinding Dark=#303135, Light=#4286F5,Default=#4286F5}" VerticalOptions="Start" HorizontalOptions="Fill">
+            <Label Text="Translator" FontSize="28" TextColor="White" HorizontalOptions="Center"/>
+        </Frame>
+        
+        <Frame Grid.Row="1" BackgroundColor="{AppThemeBinding Dark=#2A2B2F, Light=#FFFFFF,Default=#FFFFFF}" Margin="0,-25,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="from_btn" Grid.Column="0" Text="{Binding from_lang}" HorizontalOptions="Start" FontSize="20" TextColor="#7598C4" BackgroundColor="Transparent" Clicked="ButtonTapped"/>
+                    <ImageButton x:Name="ExchangeBtn" Grid.Column="1" Source="exchange.png" Command="{Binding ExchangeCommand}" CommandParameter="{x:Reference ExchangeBtn}" HorizontalOptions="Center" BackgroundColor="Transparent" Scale="0.7"/>
+                    <Button x:Name="to_btn" Grid.Column="2" Text="{Binding to_lang}" HorizontalOptions="End" FontSize="20" TextColor="#7598C4" BackgroundColor="Transparent" Clicked="ButtonTapped"/>
+                </Grid>
+                <BoxView Grid.Row="1" HeightRequest="1" HorizontalOptions="FillAndExpand" BackgroundColor = "#C4C4C4"/>
+                <Editor Grid.Row="2" Placeholder="Enter your text here" FontSize="22"
+                        TextColor="{AppThemeBinding Dark=White, Light=Black,Default=Black}"
+                        Text="{Binding from_text}"
+                    PlaceholderColor="#C4C4C4"/>
+                <Button Grid.Row="3" x:Name="trans_btn" Text="Translate" TextColor="{AppThemeBinding Dark=White, Light=Black,Default=Black}" Clicked="ButtonTapped" Command="{Binding TranslateCommand}" BackgroundColor="Transparent"/>
+            </Grid>
+        </Frame>
+
+        <Frame Grid.Row="2" Margin="10,10,10,10" CornerRadius="10" BackgroundColor="{AppThemeBinding Dark=#2A2B2F, Light=#FFFFFF,Default=#FFFFFF}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Editor Grid.ColumnSpan="2" VerticalOptions="Fill" HorizontalOptions="Fill" FontSize="20" 
+                    Placeholder="{Binding place_holder_text}" IsReadOnly="true"
+                    TextColor="{AppThemeBinding Dark=White, Light=Black,Default=Black}"
+                    PlaceholderColor="#C4C4C4"
+                    Text="{Binding translated_text}"/>
+                <ImageButton x:Name="CopyBtn" Scale="0.9" Source="{AppThemeBinding Dark=copy_white.png, Light=copy_black.png,Default=copy_black.png}" 
+                             Grid.Row="1" Grid.Column="1" BackgroundColor="Transparent" 
+                             HorizontalOptions="End" Command="{Binding CopyCommand}" CommandParameter="{x:Reference CopyBtn}"/>
+            </Grid>
+        </Frame>
+    </Grid>
+
+</ContentPage>
