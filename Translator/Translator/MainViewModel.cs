@@ -15,7 +15,8 @@ namespace Translator
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public List<string> AllLang = new List<string>(){
-            "English", "French", "Amharic", "Spanish", "Portugesse", "Arabic", "Hindi", "Punjabi"
+            "English", "French", "Hindi", "German", "Arabic", "Amharic", "Spanish",
+            "Portuguese", "Tamil", "Russian", "Malayalam", "Bengali", "Punjabi", "filipino"
         };
 
         public MainViewModel()
@@ -118,13 +119,34 @@ namespace Translator
                 }
             }
         }
-
+        public bool trans_clicked = false;
         async void Translate()
         {
-            place_holder_text = "Loading...";
-            await Task.Delay(TimeSpan.FromSeconds(2));
-            // the translation will be done here
-            translated_text = from_text;
+            if(trans_clicked == false)
+            {
+                trans_clicked = true;
+                if (String.IsNullOrEmpty(from_text) == false)
+                {
+                    translated_text = string.Empty;
+                    place_holder_text = "Translating...";
+                    var api = new ApiCall(from_text, to_lang);
+
+                    var response = await api.Translate();
+                    if (response.Error == false)
+                    {
+                        translated_text = response.translated_text;
+                    }
+                    else
+                    {
+                        place_holder_text = response.ErrorType;
+                    }
+                }
+                else
+                {
+                    DependencyService.Get<IToast>().ToastShow("No sentence to be translated");
+                }
+                trans_clicked = false;
+            }
         }
 
 
@@ -140,6 +162,24 @@ namespace Translator
             var previous_from = from_lang;
             from_lang = to_lang;
             to_lang = previous_from;
+            if(String.IsNullOrEmpty(translated_text) == false)
+            {
+                from_text = translated_text;
+                translated_text = string.Empty;
+                place_holder_text = "Translating...";
+
+                var api = new ApiCall(from_text, to_lang);
+
+                var response = await api.Translate();
+                if (response.Error == false)
+                {
+                    translated_text = response.translated_text;
+                }
+                else
+                {
+                    place_holder_text = response.ErrorType;
+                }
+            }
         }
 
         public ICommand CopyCommand => new Command(Copy);
@@ -150,7 +190,10 @@ namespace Translator
             await btn.RotateTo(-10, 300, Easing.CubicInOut);
             await Clipboard.SetTextAsync(translated_text);
             await btn.RotateTo(0, 300, Easing.CubicInOut);
-            DependencyService.Get<IToast>().ToastShow("Text copied to clipboard");
+            if(String.IsNullOrEmpty(translated_text) == false)
+            {
+                DependencyService.Get<IToast>().ToastShow("Text copied to clipboard");
+            }
         }
     }
 }

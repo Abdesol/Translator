@@ -16,4 +16,14 @@
     <!--<item name="colorAccent">#FF4081</item>-->
     <item name="android:colorActivatedHighlight">@android:color/transparent</item>
   </style>
+
+  <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <item name="android:windowBackground">@drawable/splash_screen</item>
+    <item name="android:statusBarColor">@color/splash_background</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowActionBar">true</item>
+
+  </style>
+  
 </resources>

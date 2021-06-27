@@ -6,8 +6,8 @@
 
     <Grid BackgroundColor="{AppThemeBinding Dark=#212121, Light=#EEEEEE,Default=#EEEEEE}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="350"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -18,8 +18,8 @@
         <Frame Grid.Row="0" BackgroundColor="{AppThemeBinding Dark=#303135, Light=#4286F5,Default=#4286F5}" VerticalOptions="Start" HorizontalOptions="Fill">
             <Label Text="Translator" FontSize="28" TextColor="White" HorizontalOptions="Center"/>
         </Frame>
-        
-        <Frame Grid.Row="1" BackgroundColor="{AppThemeBinding Dark=#2A2B2F, Light=#FFFFFF,Default=#FFFFFF}" Margin="0,-25,0,0">
+
+        <Frame Grid.Row="1" BackgroundColor="{AppThemeBinding Dark=#2A2B2F, Light=#FFFFFF,Default=#FFFFFF}" Margin="3,3,3,3" CornerRadius="7">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="45"/>
@@ -29,9 +29,9 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="from_btn" Grid.Column="0" Text="{Binding from_lang}" HorizontalOptions="Start" FontSize="20" TextColor="#7598C4" BackgroundColor="Transparent" Clicked="ButtonTapped"/>
                     <ImageButton x:Name="ExchangeBtn" Grid.Column="1" Source="exchange.png" Command="{Binding ExchangeCommand}" CommandParameter="{x:Reference ExchangeBtn}" HorizontalOptions="Center" BackgroundColor="Transparent" Scale="0.7"/>
